@@ -1,4 +1,6 @@
-public class ArrayDeque<T> implements Deque<T> {
+import java.util.Iterator;
+
+public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private int size;
     private T[] items;
 
@@ -62,6 +64,9 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public void addFirst(T x) {
+        if (x == null) {
+            throw  new java.lang.IllegalArgumentException();
+        }
         if (size == items.length) {
             resize(FACTOR * size);
         }
@@ -80,7 +85,8 @@ public class ArrayDeque<T> implements Deque<T> {
     @Override
     public T removeFirst() {
         if (size == 0){
-            return null;
+            throw new java.util.NoSuchElementException();
+            //return null;
         }
 
         nextFirst = mod(nextFirst + 1);
@@ -94,6 +100,9 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public void addLast(T x) {
+        if (x == null) {
+            throw  new java.lang.IllegalArgumentException();
+        }
         if (size == items.length){
             resize(FACTOR * size);
         }
@@ -107,7 +116,8 @@ public class ArrayDeque<T> implements Deque<T> {
     @Override
     public T removeLast() {
         if (size == 0) {
-            return null;
+            throw new java.util.NoSuchElementException();
+            //return null;
         }
         nextLast = mod(nextLast - 1);
         size = size - 1;
@@ -136,5 +146,31 @@ public class ArrayDeque<T> implements Deque<T> {
             System.out.print(get(i));
             System.out.print(" ");
         }
+    }
+
+    private class ArrayDequeIterator implements Iterator<T> {
+        private int s = size;
+        @Override
+        public boolean hasNext() {
+            return s > 0;
+        }
+
+        @Override
+        public T next() {
+            if (hasNext()) {
+                return get(size - (s--));
+            } else {
+                throw new java.util.NoSuchElementException();
+            }
+        }
+
+        @Override
+        public void remove() {
+            throw new java.lang.UnsupportedOperationException();
+        }
+    }
+    @Override
+    public Iterator<T> iterator() {
+        return new ArrayDequeIterator();
     }
 }

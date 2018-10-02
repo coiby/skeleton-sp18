@@ -1,17 +1,8 @@
-public class LinkedListDeque<T> implements Deque<T> {
+import java.util.Iterator;
 
-    private class ListNode {
-        T item;
-        ListNode next;
-        ListNode prev;
-        public ListNode(T e, ListNode n, ListNode p) {
-            item = e;
-            next = n;
-            prev = p;
-        }
-    }
+public class LinkedListDeque<Item> implements Deque<Item>, Iterable<Item>  {
 
-    private ListNode  sentinel;
+    private final ListNode sentinel;
 
     private int size;
 
@@ -26,6 +17,48 @@ public class LinkedListDeque<T> implements Deque<T> {
         sentinel.next = sentinel;
         size = 0;
     }
+
+    @Override
+    public Iterator<Item> iterator() {
+        return new LinkedListDequeIterator();
+    }
+
+    private class LinkedListDequeIterator implements Iterator<Item> {
+
+        private ListNode curr = sentinel.next;
+        @Override
+        public boolean hasNext() {
+            return curr.item != null;
+        }
+
+        @Override
+        public Item next() {
+            if (curr.item != null) {
+                Item item = curr.item;
+                curr = curr.next;
+                return item;
+            } else {
+                throw new java.util.NoSuchElementException();
+            }
+        }
+
+        @Override
+        public void remove() {
+            throw new java.lang.UnsupportedOperationException();
+        }
+    }
+
+    private class ListNode {
+        Item item;
+        ListNode next;
+        ListNode prev;
+        ListNode(Item e, ListNode n, ListNode p) {
+            item = e;
+            next = n;
+            prev = p;
+        }
+    }
+
 
     @Override
     public int size() {
@@ -44,12 +77,12 @@ public class LinkedListDeque<T> implements Deque<T> {
     }
 
 
-    private T getFromFront(int index) {
+    private Item getFromFront(int index) {
         ListNode ln = sentinel;
         int i = 0;
         while (ln.next != null) {
             ln = ln.next;
-            if (i == index){
+            if (i == index) {
                 break;
             }
         }
@@ -57,12 +90,12 @@ public class LinkedListDeque<T> implements Deque<T> {
         return ln.item;
     }
 
-    private T getFromBack(int index) {
+    private Item getFromBack(int index) {
         ListNode ln = sentinel;
         int i = 0;
         while (ln.prev != null) {
             ln = ln.prev;
-            if (i == index){
+            if (i == index) {
                 break;
             }
         }
@@ -79,9 +112,9 @@ public class LinkedListDeque<T> implements Deque<T> {
      * @return
      */
     @Override
-    public T get(int index) {
+    public Item get(int index) {
 
-        if (index < size/2){
+        if (index < size / 2) {
             return getFromFront(index);
         }
 
@@ -90,45 +123,61 @@ public class LinkedListDeque<T> implements Deque<T> {
     }
 
     @Override
-    public void addFirst(T item) {
-        ListNode new_item = new ListNode(item, sentinel.next, sentinel);
-        sentinel.next.prev = new_item;
-        sentinel.next = new_item;
+    public void addFirst(Item item) {
+        if (item == null) {
+            throw  new java.lang.IllegalArgumentException();
+        }
+        ListNode newItem = new ListNode(item, sentinel.next, sentinel);
+        sentinel.next.prev = newItem;
+        sentinel.next = newItem;
         size = size + 1;
     }
 
     @Override
-    public T removeFirst(){
-        if (sentinel.next.item == null) {
-            return null;
+    public Item removeFirst() {
+        if (size == 0) {
+            throw new java.util.NoSuchElementException();
+            //return null;
         }
+        /*if (sentinel.next.item == null) {
+            return null;
+        }*/
         size = size - 1;
-        ListNode next_next = sentinel.next.next;
-        next_next.prev = sentinel;
-        sentinel.next = next_next;
-        return next_next.item;
+        Item item = sentinel.next.item;
+        ListNode nextNext = sentinel.next.next;
+        nextNext.prev = sentinel;
+        sentinel.next = nextNext;
+        return item;
 
     }
 
     @Override
-    public void addLast(T item) {
+    public void addLast(Item item) {
+        if (item == null) {
+            throw  new java.lang.IllegalArgumentException();
+        }
         ListNode bp = sentinel.prev;
-        ListNode new_item = new ListNode(item, sentinel, bp);
-        bp.next = new_item;
-        sentinel.prev =  new_item;
+        ListNode newItem = new ListNode(item, sentinel, bp);
+        bp.next = newItem;
+        sentinel.prev =  newItem;
         size = size + 1;
     }
 
     @Override
-    public T removeLast() {
-        if (sentinel.next.item == null) {
-            return null;
+    public Item removeLast() {
+        if (size == 0) {
+            throw new java.util.NoSuchElementException();
+            //return null;
         }
+        /*if (sentinel.next.item == null) {
+            return null;
+        }*/
         size = size - 1;
-        ListNode prev_prev = sentinel.prev.prev;
-        prev_prev.next = sentinel;
-        sentinel.prev = prev_prev;
-        return prev_prev.item;
+        Item item = sentinel.prev.item;
+        ListNode prevPrev = sentinel.prev.prev;
+        prevPrev.next = sentinel;
+        sentinel.prev = prevPrev;
+        return item;
     }
 
     public boolean isEmpty() {
