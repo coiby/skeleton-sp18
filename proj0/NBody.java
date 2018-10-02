@@ -15,7 +15,7 @@ public class NBody {
         StdDraw.picture(0, 0, "images/starfield.jpg");
         StdDraw.show();
 
-        for (int i=0; i < planets.length; i++) {
+        for (int i = 0; i < planets.length; i++) {
             planets[i].draw();
         }
 
@@ -27,7 +27,7 @@ public class NBody {
         double[] yForces = new double[num];
 
         while (time < T) {
-            for (int i=0; i < num; i++) {
+            for (int i = 0; i < num; i++) {
                 xForces[i] = planets[i].calcNetForceExertedByX(planets);
                 yForces[i] = planets[i].calcNetForceExertedByY(planets);
                 planets[i].update(dt, xForces[i], yForces[i]);
@@ -36,7 +36,7 @@ public class NBody {
 
             StdDraw.picture(0, 0, "images/starfield.jpg");
 
-            for (int i=0; i < num; i++) {
+            for (int i = 0; i < num; i++) {
                 planets[i].update(dt, xForces[i], yForces[i]);
                 planets[i].draw();
             }
