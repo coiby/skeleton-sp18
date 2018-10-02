@@ -4,7 +4,7 @@ public class LinkedListDeque<T> {
         T item;
         ListNode next;
         ListNode prev;
-        public ListNode(T e, ListNode n, ListNode p) {
+        ListNode(T e, ListNode n, ListNode p) {
             item = e;
             next = n;
             prev = p;
@@ -47,7 +47,7 @@ public class LinkedListDeque<T> {
         int i = 0;
         while (ln.next != null) {
             ln = ln.next;
-            if (i == index){
+            if (i == index) {
                 break;
             }
         }
@@ -60,7 +60,7 @@ public class LinkedListDeque<T> {
         int i = 0;
         while (ln.prev != null) {
             ln = ln.prev;
-            if (i == index){
+            if (i == index) {
                 break;
             }
         }
@@ -78,7 +78,7 @@ public class LinkedListDeque<T> {
      */
     public T get(int index) {
 
-        if (index < size/2){
+        if (index < size / 2) {
             return getFromFront(index);
         }
 
@@ -87,29 +87,29 @@ public class LinkedListDeque<T> {
     }
 
     public void addFirst(T item) {
-        ListNode new_item = new ListNode(item, sentinel.next, sentinel);
-        sentinel.next.prev = new_item;
-        sentinel.next = new_item;
+        ListNode newItem = new ListNode(item, sentinel.next, sentinel);
+        sentinel.next.prev = newItem;
+        sentinel.next = newItem;
         size = size + 1;
     }
 
-    public T removeFirst(){
+    public T removeFirst() {
         if (sentinel.next.item == null) {
             return null;
         }
         size = size - 1;
-        ListNode next_next = sentinel.next.next;
-        next_next.prev = sentinel;
-        sentinel.next = next_next;
-        return next_next.item;
+        ListNode nextNext = sentinel.next.next;
+        nextNext.prev = sentinel;
+        sentinel.next = nextNext;
+        return nextNext.item;
 
     }
 
     public void addLast(T item) {
         ListNode bp = sentinel.prev;
-        ListNode new_item = new ListNode(item, sentinel, bp);
-        bp.next = new_item;
-        sentinel.prev =  new_item;
+        ListNode newItem = new ListNode(item, sentinel, bp);
+        bp.next = newItem;
+        sentinel.prev =  newItem;
         size = size + 1;
     }
 
@@ -118,13 +118,13 @@ public class LinkedListDeque<T> {
             return null;
         }
         size = size - 1;
-        ListNode prev_prev = sentinel.prev.prev;
-        prev_prev.next = sentinel;
-        sentinel.prev = prev_prev;
-        return prev_prev.item;
+        ListNode prevPrev = sentinel.prev.prev;
+        prevPrev.next = sentinel;
+        sentinel.prev = prevPrev;
+        return prevPrev.item;
     }
 
     public boolean isEmpty() {
-        return (sentinel.next.item == null);//TODO and back_sentinel == null?
+        return (sentinel.next.item == null);
     }
 }
