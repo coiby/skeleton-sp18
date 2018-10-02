@@ -1,0 +1,22 @@
+CS 61B Public
+
+
+"* The explanation.txt you included is not long enough. Please provide additional information."
+
+"* The explanation.txt you included is not long enough. Please provide additional information."
+
+"* The explanation.txt you included is not long enough. Please provide additional information."
+
+"* The explanation.txt you included is not long enough. Please provide additional information."
+
+"* The explanation.txt you included is not long enough. Please provide additional information."
+
+"* The explanation.txt you included is not long enough. Please provide additional information."
+
+"* The explanation.txt you included is not long enough. Please provide additional information."
+
+"* The explanation.txt you included is not long enough. Please provide additional information."
+
+
+
+Thank you for providing the autograder.
