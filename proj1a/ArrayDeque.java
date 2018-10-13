@@ -110,8 +110,9 @@ public class ArrayDeque<T> {
         }
         nextLast = mod(nextLast - 1);
         size = size - 1;
+        T last = items[nextLast];
         checkUsage();
-        return items[nextLast];
+        return last;
 
     }
 

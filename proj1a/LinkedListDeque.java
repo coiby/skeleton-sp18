@@ -50,6 +50,7 @@ public class LinkedListDeque<T> {
             if (i == index) {
                 break;
             }
+            i++;
         }
 
         return ln.item;
@@ -63,6 +64,7 @@ public class LinkedListDeque<T> {
             if (i == index) {
                 break;
             }
+            i++;
         }
 
         return ln.item;
