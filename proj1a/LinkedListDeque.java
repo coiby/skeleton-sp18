@@ -101,14 +101,9 @@ public class LinkedListDeque<T> {
     }
 
     public void addFirst(T item) {
-        ListNode newItem;
-        if (size == 0) {
-            newItem = new ListNode(item, sentinel, sentinel);
-            sentinel.prev = newItem;
-        } else {
-            newItem = new ListNode(item, sentinel.next, sentinel);
-            sentinel.next.prev = newItem;
-        }
+        ListNode newItem = new ListNode(item, sentinel.next, sentinel);
+        sentinel.next.prev = newItem;
+
         sentinel.next = newItem;
         size = size + 1;
     }
@@ -118,10 +113,11 @@ public class LinkedListDeque<T> {
             return null;
         }
         size = size - 1;
+        ListNode first = sentinel.next;
         ListNode nextNext = sentinel.next.next;
         nextNext.prev = sentinel;
         sentinel.next = nextNext;
-        return nextNext.item;
+        return first.item;
 
     }
 
