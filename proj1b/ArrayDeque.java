@@ -34,26 +34,28 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     private void resize(int capacity) {
         int nowFirst;
         int nowLast;
-        T[] new_items = (T[]) new Object[capacity];
-        int new_first = capacity / 4;
-        nowFirst = mod(nextFirst + 1);//the index of the first item
-        nowLast = mod(nextLast - 1);//the index of the last item
-        initalFirst = new_first + initalFirst - nowFirst;
-        //nowLast doesn't go to the beginning of the deque and nowFirst doesn't go to the end of the deque
+        T[] newItems = (T[]) new Object[capacity];
+        int newFirst = capacity / 4;
+        nowFirst = mod(nextFirst + 1); //the index of the first item
+        nowLast = mod(nextLast - 1); //the index of the last item
+        initalFirst = newFirst + initalFirst - nowFirst;
+        // nowLast doesn't go to the beginning of the deque and nowFirst
+        // doesn't go to the end of the deque
         if (nowLast > nowFirst) {
-            System.arraycopy(items, nowFirst, new_items, new_first, size);
+            System.arraycopy(items, nowFirst, newItems, newFirst, size);
         } else {
-            int t_size = size - nowFirst;
-            System.arraycopy(items, nowFirst, new_items, new_first, t_size); //copy from nowFirst to the end
-            System.arraycopy(items, 0, new_items, new_first + t_size, nowFirst);
+            int tSize = size - nowFirst;
+            // copy from nowFirst to the end
+            System.arraycopy(items, nowFirst, newItems, newFirst, tSize);
+            System.arraycopy(items, 0, newItems, newFirst + tSize, nowFirst);
             if (nextFirst > initalFirst) {
                 initalFirst = initalFirst + size;
             }
         }
 
-        items = new_items;
-        nextFirst = new_first - 1;
-        nextLast = new_first + size;
+        items = newItems;
+        nextFirst = newFirst - 1;
+        nextLast = newFirst + size;
 
     }
 
@@ -76,24 +78,24 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         nextFirst = mod(nextFirst - 1);
     }
 
-    private void check_usage () {
-        if (items.length > 8 && 1.0 * size / items.length < USAGE_FACTOR) { //only shrink when items.length > 8
+    private void checkUsage() {
+        //only shrink when items.length > 8
+        if (items.length > 8 && 1.0 * size / items.length < USAGE_FACTOR) {
             resize(items.length / 2);
         }
     }
 
     @Override
     public T removeFirst() {
-        if (size == 0){
-            throw new java.util.NoSuchElementException();
-            //return null;
+        if (size == 0) {
+            return null;
         }
 
         nextFirst = mod(nextFirst + 1);
         initalFirst = nextFirst;
         T r = items[nextFirst];
         size = size - 1;
-        check_usage();
+        checkUsage();
         return r;
 
     }
@@ -103,7 +105,7 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
         if (x == null) {
             throw  new java.lang.IllegalArgumentException();
         }
-        if (size == items.length){
+        if (size == items.length) {
             resize(FACTOR * size);
         }
 
@@ -116,13 +118,13 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
     @Override
     public T removeLast() {
         if (size == 0) {
-            throw new java.util.NoSuchElementException();
-            //return null;
+            return null;
         }
         nextLast = mod(nextLast - 1);
         size = size - 1;
-        check_usage();
-        return items[nextLast];
+        T last = items[nextLast];
+        checkUsage();
+        return last;
 
     }
 
