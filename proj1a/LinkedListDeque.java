@@ -86,6 +86,20 @@ public class LinkedListDeque<T> {
 
     }
 
+    private T getRecursiveHelper(int index, ListNode node) {
+        if (index == 0 && node.next != null) {
+            return node.next.item;
+        } else if (index > 0 && node.next == null) {
+            return null;
+        } else {
+            return getRecursiveHelper(index - 1, node.next);
+        }
+    }
+
+    public T getRecursive(int index) {
+        return getRecursiveHelper(index, sentinel);
+    }
+
     public void addFirst(T item) {
         ListNode newItem = new ListNode(item, sentinel.next, sentinel);
         sentinel.next.prev = newItem;
