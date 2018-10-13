@@ -6,7 +6,7 @@ public class ArrayDeque<T> {
     private static double USAGE_FACTOR = 0.25;
     private int nextFirst; // circular array
     private int nextLast;
-    private int initalFirst; //mark the initial position of nextFirst
+    private int initalFirst; // mark the initial position of nextFirst
 
     public ArrayDeque() {
         size = 0;
@@ -87,8 +87,9 @@ public class ArrayDeque<T> {
         nextFirst = mod(nextFirst + 1);
         initalFirst = nextFirst;
         size = size - 1;
+        T deleted = items[nextFirst];
         checkUsage();
-        return items[nextFirst];
+        return deleted;
 
     }
 

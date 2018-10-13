@@ -45,7 +45,7 @@ public class LinkedListDeque<T> {
     private T getFromFront(int index) {
         ListNode ln = sentinel;
         int i = 0;
-        while (ln.next != null) {
+        while (ln.next != sentinel) { // stop when it reaches the tail
             ln = ln.next;
             if (i == index) {
                 break;
@@ -58,7 +58,7 @@ public class LinkedListDeque<T> {
     private T getFromBack(int index) {
         ListNode ln = sentinel;
         int i = 0;
-        while (ln.prev != null) {
+        while (ln.prev != sentinel) { // stop when it reaches the head
             ln = ln.prev;
             if (i == index) {
                 break;
@@ -109,14 +109,14 @@ public class LinkedListDeque<T> {
     }
 
     public T removeFirst() {
-        if (sentinel.next.item == null) {
+        if (isEmpty()) {
             return null;
         }
         size = size - 1;
         ListNode first = sentinel.next;
-        ListNode nextNext = sentinel.next.next;
-        nextNext.prev = sentinel;
-        sentinel.next = nextNext;
+        ListNode second = first.next;
+        second.prev = sentinel;
+        sentinel.next = second;
         return first.item;
 
     }
@@ -130,14 +130,14 @@ public class LinkedListDeque<T> {
     }
 
     public T removeLast() {
-        if (sentinel.next.item == null) {
+        if (isEmpty()) {
             return null;
         }
         size = size - 1;
-        ListNode prevPrev = sentinel.prev.prev;
         ListNode last = sentinel.prev;
-        prevPrev.next = sentinel;
-        sentinel.prev = prevPrev;
+        ListNode secondToLast = last.prev;
+        secondToLast.next = sentinel;
+        sentinel.prev = secondToLast;
         return last.item;
     }
 
