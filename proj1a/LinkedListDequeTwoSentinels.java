@@ -4,26 +4,26 @@ public class LinkedListDequeTwoSentinels<T> {
         T item;
         ListNode next;
         ListNode prev;
-        public ListNode(T e, ListNode n, ListNode p) {
+        ListNode(T e, ListNode n, ListNode p) {
             item = e;
             next = n;
             prev = p;
         }
     }
 
-    private ListNode frt_sentinel;
-    private ListNode back_sentinel;
+    private ListNode frtSentinel;
+    private ListNode backSentinel;
     private int size;
 
     /**
-     * TODO initial value for sentinel should be provided, this seems to be ugly because user should there is a setinel
+     * TODO initial value for sentinel should be provided, this seems to be ugly
      *
      * @param e
      */
     public LinkedListDequeTwoSentinels() {
-        frt_sentinel = new ListNode(null, null, null);
-        back_sentinel = new ListNode(null, null, frt_sentinel);
-        frt_sentinel.next = back_sentinel;
+        frtSentinel = new ListNode(null, null, null);
+        backSentinel = new ListNode(null, null, frtSentinel);
+        frtSentinel.next = backSentinel;
         size = 0;
     }
 
@@ -32,7 +32,7 @@ public class LinkedListDequeTwoSentinels<T> {
     }
 
     public void printDeque() {
-        ListNode ln = frt_sentinel.next;
+        ListNode ln = frtSentinel.next;
         while (ln.item != null) {
             System.out.print(ln.item);
             System.out.print(" ");
@@ -43,11 +43,11 @@ public class LinkedListDequeTwoSentinels<T> {
 
 
     private T getFromFront(int index) {
-        ListNode ln = frt_sentinel;
+        ListNode ln = frtSentinel;
         int i = 0;
         while (ln.next != null) {
             ln = ln.next;
-            if (i == index){
+            if (i == index) {
                 break;
             }
         }
@@ -56,11 +56,11 @@ public class LinkedListDequeTwoSentinels<T> {
     }
 
     private T getFromBack(int index) {
-        ListNode ln = back_sentinel;
+        ListNode ln = backSentinel;
         int i = 0;
         while (ln.prev != null) {
             ln = ln.prev;
-            if (i == index){
+            if (i == index) {
                 break;
             }
         }
@@ -78,7 +78,7 @@ public class LinkedListDequeTwoSentinels<T> {
      */
     public T get(int index) {
 
-        if (index < size/2){
+        if (index < size / 2) {
             return getFromFront(index);
         }
 
@@ -87,44 +87,44 @@ public class LinkedListDequeTwoSentinels<T> {
     }
 
     public void addFirst(T item) {
-        ListNode new_item = new ListNode(item, frt_sentinel.next, frt_sentinel);
-        frt_sentinel.next.prev = new_item;
-        frt_sentinel.next = new_item;
+        ListNode newItem = new ListNode(item, frtSentinel.next, frtSentinel);
+        frtSentinel.next.prev = newItem;
+        frtSentinel.next = newItem;
         size = size + 1;
     }
 
-    public T removeFirst(){
-        if (frt_sentinel.next == null) {
+    public T removeFirst() {
+        if (frtSentinel.next == null) {
             return null;
         }
         size = size - 1;
-        ListNode next_next = frt_sentinel.next.next;
-        next_next.prev = frt_sentinel;
-        frt_sentinel.next = next_next;
-        return next_next.item;
+        ListNode nextNext = frtSentinel.next.next;
+        nextNext.prev = frtSentinel;
+        frtSentinel.next = nextNext;
+        return nextNext.item;
 
     }
 
     public void addLast(T item) {
-        ListNode bp = back_sentinel.prev;
-        ListNode new_item = new ListNode(item, back_sentinel, bp);
-        bp.next = new_item;
-        back_sentinel.prev =  new_item;
+        ListNode bp = backSentinel.prev;
+        ListNode newItem = new ListNode(item, backSentinel, bp);
+        bp.next = newItem;
+        backSentinel.prev =  newItem;
         size = size + 1;
     }
 
     public T removeLast() {
-        if (back_sentinel.prev == null) {
+        if (backSentinel.prev == null) {
             return null;
         }
         size = size - 1;
-        ListNode prev_prev = back_sentinel.prev.prev;
-        prev_prev.next = back_sentinel;
-        back_sentinel.prev = prev_prev;
-        return prev_prev.item;
+        ListNode prevPrev = backSentinel.prev.prev;
+        prevPrev.next = backSentinel;
+        backSentinel.prev = prevPrev;
+        return prevPrev.item;
     }
 
     public boolean isEmpty() {
-        return (frt_sentinel.next.item == null);//TODO and back_sentinel == null?
+        return (frtSentinel.next.item == null); // TODO and backSentinel == null?
     }
 }
