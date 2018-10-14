@@ -9,11 +9,21 @@ public class ComplexOomage implements Oomage {
     protected List<Integer> params;
     private static final double WIDTH = 0.05;
 
-    @Override
+    /*@Override
     public int hashCode() {
         int total = 0;
         for (int x : params) {
             total = total * 256;
+            total = total + x;
+        }
+        return total;
+    }*/
+
+    @Override
+    public int hashCode() {
+        int total = 0;
+        for (int x : params) {
+            total = x * 256;
             total = total + x;
         }
         return total;
